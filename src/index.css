@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+html, body {
+  background-color: #6c412f;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar Styles */
+/* For Webkit browsers (Chrome, Safari, etc) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(146, 64, 14, 0.2);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(146, 64, 14, 0.3);
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(146, 64, 14, 0.2) transparent;
+}
+
+/* Animated Gradient Border */
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-border {
+  background: linear-gradient(60deg, #f59e0b, #d97706, #b45309, #92400e, #f59e0b);
+  background-size: 300% 300%;
+  animation: animatedgradient 4s ease infinite;
+  z-index: -1;
+}
+
+/* Code block styling for chain of thought */
+.cot-code-block {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-left: 4px solid rgba(245, 158, 11, 0.4);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  position: relative;
+}
+
+.cot-code-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, rgba(245, 158, 11, 0.6), rgba(180, 83, 9, 0.6));
+  border-radius: 4px 0 0 4px;
+}
+
+/* Typewriter effect for streaming text */
+@keyframes typing {
+  from { border-right-color: rgba(245, 158, 11, 0.7); }
+  to { border-right-color: transparent; }
+}
+
+.typewriter-cursor {
+  border-right: 0.15em solid rgba(245, 158, 11, 0.7);
+  animation: typing 0.7s infinite;
+}
+
+/* Keyframe animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-2rem);
+  }
+}
+
+@keyframes expandSearch {
+  from {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.15);
+  }
+  to {
+    transform: scale(1.02);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+  }
+}
+
+@keyframes mascotBounce {
+  0% {
+    transform: translateY(0);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.2));
+  }
+  50% {
+    transform: translateY(-10px);
+    filter: drop-shadow(0 8px 6px rgb(0 0 0 / 0.25));
+  }
+  100% {
+    transform: translateY(0);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.2));
+  }
+}
+
+@keyframes fadeUpOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Component styles */
+@layer components {
+  .button {
+    @apply px-6 py-3 bg-amber-500 text-white font-bold text-lg rounded-xl
+           shadow-lg hover:bg-amber-600 active:bg-amber-700 
+           transform transition-all duration-200
+           active:scale-95 active:shadow-md
+           hover:shadow-amber-600/20 hover:shadow-xl
+           border border-amber-400/20;
+  }
+  
+  .search-input {
+    @apply transition-all duration-300 ease-out
+           border border-amber-200/30
+           backdrop-blur-sm
+           overflow-hidden text-ellipsis whitespace-nowrap;
+  
+    &::placeholder {
+      animation: var(--placeholder-animation) 0.6s cubic-bezier(0.4, 0, 0.2, 1) both running;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  
+    &:focus::placeholder {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+  
+  .search-input:focus {
+    @apply animate-[expandSearch_0.3s_ease-out_forwards];
+  }
+}
+
+/* Fullscreen modal animation */
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalExit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.modal-enter {
+  animation: modalEnter 0.2s ease-out forwards;
+}
+
+.modal-exit {
+  animation: modalExit 0.2s ease-in forwards;
+}
+
+/* Prevent text selection during resize */
+.resize-handle {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(0.2, 0, 0.1, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+.animate-mascotBounce {
+  animation: mascotBounce 2s ease-in-out infinite;
+}
+
+/* Chat response animations */
+.chat-response {
+  @apply opacity-0 transform translate-y-4;
+  animation: responseAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes responseAppear {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Side-by-side layout for results and thought process */
+.dual-pane-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .dual-pane-layout {
+    grid-template-columns: 1fr;
+  }
+}
